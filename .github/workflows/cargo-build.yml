@@ -20,6 +20,11 @@ jobs:
       - name: '🦀 Install Rust Toolchain'
         uses: dtolnay/rust-toolchain@stable
 
+      - name: '📦 Install Dependencies'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gdb-multiarch
+
       - name: '🔨 Build'
         run: cargo build --verbose --examples
 

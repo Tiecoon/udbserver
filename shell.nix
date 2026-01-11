@@ -3,6 +3,7 @@
 pkgs.mkShell {
   buildInputs = with pkgs; [
     git
+    gdb
     cmake
     clang
     cargo
