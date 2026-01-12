@@ -1,4 +1,4 @@
-name: ⚙️ Cargo Build & Test
+name: ⚙️ Build Rust
 
 on:
   push:
@@ -28,11 +28,20 @@ jobs:
       - name: '🔨 Build'
         run: cargo build --verbose --examples
 
-      - name: '🧪 Test'
-        run: cargo test --verbose --examples
+      - name: '✨ Format'
+        run: cargo fmt --check
 
       - name: '📎 Lint'
         run: cargo clippy --verbose --examples
 
-      - name: '✨ Check Format'
-        run: cargo fmt --check
+      - name: '🧪 Test'
+        run: cargo test --verbose --examples
+
+      - name: '🔖 Release'
+        if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+        uses: release-plz/action@v0.5
+        with:
+          command: release
+        env:
+          GITHUB_TOKEN: ${{ secrets.AUTO_RELEASE_TOKEN }}
+          CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
